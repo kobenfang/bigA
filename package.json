@@ -1,0 +1,25 @@
+{
+  "name": "@kobenfang/dsh-biga",
+  "version": "1.0.0",
+  "description": "Agent Skill for DeepSeek Harness (dsh): biga.",
+  "type": "module",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "SKILL.md",
+    "scripts",
+    "references",
+    "knowledge",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node _selftest.mjs"
+  },
+  "license": "MIT"
+}
