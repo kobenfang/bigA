@@ -1,0 +1,29 @@
+{
+  "开盘前瞻（早8:30）": {
+    "description": "每天早8:30推送：隔夜外围+股票池+池外候选",
+    "noDeliver": true,
+    "agentTurn": {
+      "message": "biga-morning: 开盘前瞻。严格执行SKILL.md三步：web_search×2(隔夜外围+当日热点), 检查池内异动, 输出大盘+池内关注+池外候选",
+      "timeoutSeconds": 600,
+      "lightContext": true
+    }
+  },
+  "盘中扫描（9:30-14:30每小时）": {
+    "description": "盘中检查异动(涨跌幅>5%或成交量>50%)，有则推送",
+    "noDeliver": true,
+    "agentTurn": {
+      "message": "biga-scan: 盘中扫描(涨跌幅>5%或成交量>50%才有异动)。执行python3 scripts/biga-scan.py --segments检查异动,有异动直接python3 scripts/biga-scan.py --send-segments发送(无参),无异动不推送",
+      "timeoutSeconds": 600,
+      "lightContext": true
+    }
+  },
+  "收盘复盘（15:30）": {
+    "description": "每天15:30推送：当日复盘+池内评分+池外候选筛选",
+    "noDeliver": true,
+    "agentTurn": {
+      "message": "biga-evening: 收盘复盘。严格执行SKILL.md第3-7步：web_search×2(大盘+强势板块→池外候选), 从强势板块挑2-3条池外候选并扫描评分, 输出必须含池外候选(评分+方向+逻辑+操作建议), 无候选也要写原因",
+      "timeoutSeconds": 600,
+      "lightContext": true
+    }
+  }
+}
