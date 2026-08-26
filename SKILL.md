@@ -1,6 +1,6 @@
 ---
 name: biga
-description: A股智能分析与智能选股工具。维护动态股票池(最多30支),按高科技×中小市值×好业绩原则筛选,推送买卖信号。含独立技术面择时分(-10~+10)用于判断买卖时机。A股投资、股市分析、量化选股，含定时消息推送。
+description: 🐂 BigA · A股智能分析与智能选股工具 — 实时行情+量化选股+买卖信号。维护动态股票池(最多30支),按高科技×中小市值×好业绩原则筛选,推送买入/卖出信号。含独立技术面择时分(-10~+10)判断买卖时机,覆盖基本面/技术面/资金面分析。A股投资、股市分析、量化选股、股票池管理、短线择时，含定时消息推送。| A-share stock analysis & quant stock selection — real-time quotes, timing score, buy/sell signals.
 triggers:
   - 大A
   - BigA
