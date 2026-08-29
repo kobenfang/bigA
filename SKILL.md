@@ -28,7 +28,7 @@ triggers:
 ---
 > **🌍 环境兼容（OpenClaw / DSH 双端）**
 > - **OpenClaw**：脚本在技能目录下执行（`python3 scripts/biga-scan.py`），数据默认 `~/.openclaw/workspace/memory/`，定时推送走 `openclaw cron` + `openclaw message send`。
-> - **DSH**：无 `openclaw` CLI，数据走 `$DSH_WORKSPACE/memory`（默认 `~/.dsh/workspace/memory`）；发送类命令自动降级为直接输出，cron 安装章节改用 DSH 调度。
+> - **DSH**：无 `openclaw` CLI，数据走 `$DSH_WORKSPACE/memory`（默认 `~/.dsh/workspace/memory`）；发送类命令自动降级为直接输出。**定时推送请先安装 BigTimer 技能**：`dsh plugin add github:kobenfang/BigTimer`，然后用 `bigtimer.py add` 创建定时任务。
 
 
 # 📈 BigA · A股智能选股
