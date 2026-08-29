@@ -1,5 +1,6 @@
 # BigA Cron 安装命令模板
 # cron message 仅引用SKILL.md，行为由SKILL.md驱动，更新SKILL.md即更新行为
+# ⚠️ OpenClaw 环境专用：DSH 环境无 openclaw CLI，定时任务请改用 DSH 调度（dsh-schedule）
 # 安装时请替换 CHANNEL 和 TARGET 为实际值：
 #   openclaw directory  # 获取当前渠道和目标，或从会话上下文读取
 #   CHANNEL = feishu / discord / telegram 等

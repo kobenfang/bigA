@@ -26,6 +26,10 @@ triggers:
   - 更新BigA
   - 帮我升级
 ---
+> **🌍 环境兼容（OpenClaw / DSH 双端）**
+> - **OpenClaw**：脚本在技能目录下执行（`python3 scripts/biga-scan.py`），数据默认 `~/.openclaw/workspace/memory/`，定时推送走 `openclaw cron` + `openclaw message send`。
+> - **DSH**：无 `openclaw` CLI，数据走 `$DSH_WORKSPACE/memory`（默认 `~/.dsh/workspace/memory`）；发送类命令自动降级为直接输出，cron 安装章节改用 DSH 调度。
+
 
 # 📈 BigA · A股智能选股
 
@@ -131,7 +135,7 @@ python3 scripts/biga-scan.py --segments --codes 600522,300308   # 池外分析+�
 9. **手动触发输出约束**：内容合并≤3段（股票池≤2段+池外1段），总字数≤1200字，搜索精简为1次，避免超时
 
 ### 开盘前瞻(08:30)
-0. 版本检查：读`.clawhub/origin.json`，新版本时推送末尾加更新提示
+0. 版本检查：读`.clawhub/origin.json`（DSH 环境无此文件则跳过），新版本时推送末尾加更新提示
 1. 读 stock-pool.md + references/user-preferences.md
 2. 执行 `python3 scripts/biga-scan.py --segments`
 3. web_search ×3：隔夜市场新热点 + 外围（美股/A50/地缘）+ 池外候选标的（当前强势板块中未入池的优质标的，搜2-3个）
@@ -194,7 +198,7 @@ python3 scripts/biga-scan.py --segments --codes 600522,300308   # 池外分析+�
 - 池外标的评分结果不写进stock-pool.md（那是池内标的），只在输出中展示
 
 ### 用户升级
-用户说「升级BigA/更新BigA」→ 执行 `clawhub update biga`：
+用户说「升级BigA/更新BigA」→ 执行 `clawhub update biga`（仅 OpenClaw 环境；DSH 环境用 `dsh plugin update`）：
 - 更新后读取 `references/cron-install-shell.sh` 提取三条 cron 的 timeout 值
 - 比对 `openclaw cron list`，差异则 `openclaw cron edit <id> --timeout-seconds <值>` 逐一更新
 - 回复确认

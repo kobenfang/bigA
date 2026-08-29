@@ -6,8 +6,13 @@ C=timezone(timedelta(hours=8))
 P={"6":"sh","0":"sz","3":"sz","8":"bj","4":"bj"}
 N=[("sh000001","上证指数"),("sz399001","深证成指"),("sz399006","创业板指")]
 F={"name":1,"code":2,"price":3,"y":4,"o":5,"v":6,"h":31,"change_pct":32,"H":33,"L":34,"turnover_rate":38,"pe":39,"amplitude":43,"market_cap":44}
-OC=shutil.which("openclaw")or"/Users/guoxia/.npm-global/bin/openclaw"
-K="/tmp/bk"; PP=os.path.expanduser("~/.openclaw/workspace/memory/biga-stock-pool.md"); TP=os.path.expanduser("~/.openclaw/workspace/memory/biga-technical-data.md")
+OC=shutil.which("openclaw")or""
+def _ws():
+ for v in ("DSH_WORKSPACE","OPENCLAW_WORKSPACE"):
+  if os.environ.get(v): return os.environ[v]
+ return os.path.expanduser("~/.openclaw/workspace")
+_WM=os.path.join(_ws(),"memory")
+K="/tmp/bk"; PP=os.path.join(_WM,"biga-stock-pool.md"); TP=os.path.join(_WM,"biga-technical-data.md")
 def f(v,d=0.0):
  try: return float(str(v).strip())
  except: return d
@@ -307,13 +312,17 @@ def cmd_send_segments(json_str=None):
  target = nd.get("target", "")
  if not channel or not target:
      try:
-         with open(os.path.expanduser('~/.openclaw/workspace/memory/biga-send-config.json')) as f:
+         with open(os.path.join(_WM,'biga-send-config.json')) as f:
              cfg = json.load(f)
          if not channel: channel = cfg.get('channel')
          if not target: target = cfg.get('target')
      except: pass
  if not content or not target or not channel:
      return {"error": "缺少发送参数(content/channel/target)"}
+ if not openclaw_bin:
+     # DSH 环境：无 openclaw CLI，直接输出内容作为对话回复
+     print(content)
+     return {"action": "send-segments", "mode": "dsh-print", "total": 1, "sent": 1, "failed": 0, "note": "DSH环境无openclaw，内容已直接输出"}
  parts = content.split("---SEGMENT---")
  segs = [p.strip() for p in parts if p.strip()]
  if len(segs) <= 1 and len(content) > 500:
@@ -443,7 +452,7 @@ def main():
          # 模型传入自定义内容: --send-segments '{"content":"...","channel":"...","target":"..."}'
          result = cmd_send_segments(' '.join(a2))
      else:
-         cfg_path = os.path.expanduser('~/.openclaw/workspace/memory/biga-send-config.json')
+         cfg_path = os.path.join(_WM,'biga-send-config.json')
          try:
              with open(cfg_path) as f:
                  cfg = _j.load(f)
