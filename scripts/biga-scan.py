@@ -10,6 +10,9 @@ OC=shutil.which("openclaw")or""
 def _ws():
  for v in ("DSH_WORKSPACE","OPENCLAW_WORKSPACE"):
   if os.environ.get(v): return os.environ[v]
+ if os.environ.get("OPENCLAW_GATEWAY_PORT") or os.environ.get("OPENCLAW_SERVICE_KIND"):
+  return os.path.expanduser("~/.openclaw/workspace")
+ if os.path.isdir(os.path.expanduser("~/.dsh")): return os.path.expanduser("~/.dsh/workspace")
  return os.path.expanduser("~/.openclaw/workspace")
 _WM=os.path.join(_ws(),"memory")
 K="/tmp/bk"; PP=os.path.join(_WM,"biga-stock-pool.md"); TP=os.path.join(_WM,"biga-technical-data.md")
